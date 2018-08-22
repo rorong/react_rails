@@ -32,6 +32,7 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'devise'
 gem 'react_on_rails', '11.0.9'
+gem "webpacker", "~> 3"
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
