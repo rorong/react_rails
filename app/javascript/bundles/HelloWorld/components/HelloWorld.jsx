@@ -1,20 +1,20 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import User from './User';
+import Login from './Login';
+import Admin from './Admin';
+import AdminLogin from './AdminLogin';
+import UserLogin from './UserLogin';
+import createHistory from 'history/createBrowserHistory'
+import { Router, Route, Switch } from 'react-router-dom'
 
-export default class HelloWorld extends React.Component {
+
+export default class App extends React.Component {
   static propTypes = {
-    name: PropTypes.string.isRequired, // this is passed from the Rails view
+    //name: PropTypes.string.isRequired, // this is passed from the Rails view
   };
-
-  /**
-   * @param props - Comes from your rails view.
-   */
   constructor(props) {
     super(props);
-
-    // How to set initial state in ES6 class syntax
-    // https://reactjs.org/docs/state-and-lifecycle.html#adding-local-state-to-a-class
-    this.state = { name: this.props.name };
   }
 
   updateName = (name) => {
@@ -22,23 +22,34 @@ export default class HelloWorld extends React.Component {
   };
 
   render() {
+    const history = createHistory()
     return (
       <div>
-        <h3>
-          Hello, {this.state.name}!
-        </h3>
-        <hr />
-        <form >
-          <label htmlFor="name">
-            Say hello to:
-          </label>
-          <input
-            id="name"
-            type="text"
-            value={this.state.name}
-            onChange={(e) => this.updateName(e.target.value)}
-          />
-        </form>
+        <Router history={history}>
+          <Switch>
+           
+           <Route
+             exact path='/hello_world/'
+             component={ Login }
+            /> 
+            <Route
+             exact path='/hello_world/user'
+             component={ User }
+            /> 
+            <Route
+              exact path='/hello_world/admin'
+              component={ Admin }
+            />
+            <Route
+              exact path='/hello_world/adminlogin'
+              component={ AdminLogin }
+            />   
+            <Route
+              exact path='/hello_world/userlogin'
+              component={ UserLogin }
+            />
+        </Switch>
+      </Router>
       </div>
     );
   }
