@@ -4,10 +4,12 @@ import User from './User';
 import Login from './Login';
 import Admin from './Admin';
 import AdminLogin from './AdminLogin';
+import {Provider} from 'react-redux';
 import UserLogin from './UserLogin';
 import createHistory from 'history/createBrowserHistory'
 import { Router, Route, Switch } from 'react-router-dom'
-
+import configureStore from '../store/configureStore';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default class App extends React.Component {
   static propTypes = {
@@ -17,14 +19,12 @@ export default class App extends React.Component {
     super(props);
   }
 
-  updateName = (name) => {
-    this.setState({ name });
-  };
-
   render() {
+    const store = configureStore();
     const history = createHistory()
     return (
       <div>
+        <Provider store={store}>
         <Router history={history}>
           <Switch>
            
@@ -50,7 +50,9 @@ export default class App extends React.Component {
             />
         </Switch>
       </Router>
+      </Provider>
       </div>
     );
   }
 }
+

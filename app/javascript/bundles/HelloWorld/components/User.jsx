@@ -1,9 +1,12 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
+import { withCookies, Cookies } from 'react-cookie';
+import { connect } from 'react-redux';
+import { instanceOf } from 'prop-types';
+import { signup } from '../actions/index'
 
-
-export default class User extends React.Component {
+class User extends React.Component {
   static propTypes = {
   };
   constructor(props) {
@@ -11,18 +14,18 @@ export default class User extends React.Component {
     this.state = {
       name: '',
       password : '',
-      name: ''
+      email: ''
     }
   }
 
-      handleSubmit = () => {
-     const {email, name, password} = this.state;
-      const checkValidation = this.validateForm();
+handleSubmit = () => {
+    const {email, name, password} = this.state;
+    const checkValidation = this.validateForm();
   }
 
     validateForm () {
       const State = this.state;
-    const PwdValidation = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,50}$/;
+    const PwdValidation = /^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,50}$/;
     const EmailValidation = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if(this.state.name === "") {
@@ -42,10 +45,17 @@ export default class User extends React.Component {
     }
 
     else if(State.email != '' && State.name!= '' && State.password != '' ) {
-         this.props.history.push('/hello_world/userlogin')
+      const OBJ={ 'email': this.state.email,'full_name': this.state.name, 'password': this.state.password, 'type': 1 }
+      const USER = {'user' : OBJ }
+      this.props.dispatch(signup(USER))
+      alert("CREATED")
+      this.setState({name: '', email: '', password: ''})
     }
   }
 
+handleLogin() {
+  this.props.history.push('/hello_world/')
+}
  
 
   updateName = (name) => {
@@ -53,15 +63,16 @@ export default class User extends React.Component {
   };
 
   render() {
-    // console.log(this.props,'ds====================')
     return (
-      <div>
+      <div className="container" align="center">
         <h1> User </h1>
+        <div className="input-fields"  >
         <span> Full Name &nbsp;
           <input 
             type="text" 
             onChange={(e) => this.setState({ name: e.target.value})} 
             value={this.state.name}
+            className="form-control col-md-3"
           />
         </span> 
         <br/>
@@ -70,6 +81,7 @@ export default class User extends React.Component {
             type="email" 
             onChange={(e) => this.setState({ email: e.target.value})} 
             value={this.state.email}
+            className="form-control col-md-3"
           />
         </span> 
         <br/>
@@ -77,13 +89,30 @@ export default class User extends React.Component {
           <input 
             type="password"  
             onChange={(e) => this.setState({ password: e.target.value})} 
-            value={this.state.passData} 
+            value={this.state.password}
+            className="form-control col-md-3" 
           />
         </span>
+        </div>
          <br/>
-          <button onClick = {() => this.handleSubmit()}> SignIn </button>
-           <button onClick = {() => this.handleSubmit()}> Login </button>
+        <div className="btnClass">
+          <button className="btn btn-primary"  onClick = {() => this.handleSubmit()}> SignIn </button>
+           <button className="btn btn-primary"  onClick = {() => this.handleLogin()}> Login </button>
+        </div>
       </div>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+    return {
+      formData : state.formData
+    };
+  }
+
+
+User.propTypes = {
+  cookies: instanceOf(Cookies).isRequired
+};
+
+export default connect(mapStateToProps)(User)

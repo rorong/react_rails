@@ -1,7 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux';
+import * as actions from '../actions';
+import './globalStyle.css';
 
-export default class UserLogin extends React.Component {
+ class UserLogin extends React.Component {
   static propTypes = {
    // name: PropTypes.string.isRequired, // this is passed from the Rails view
   };
@@ -16,41 +20,55 @@ export default class UserLogin extends React.Component {
     // https://reactjs.org/docs/state-and-lifecycle.html#adding-local-state-to-a-class
    
   }
+ 
+ componentWillMount() {
 
-  updateName = (name) => {
-    this.setState({ name });
-  };
+  }
+
+ componentWillReceiveProps(nextProp) {
+  }
+
+ logout() {
+  localStorage.clear();
+ }
 
   render() {
     var styles= {
       border: '1px solid'   
     }
     return (
-      <div>
-        <table style={styles}>
-          <thead>
-            <th>Full Name</th>
-            <th> Email</th>
-            <th>Password</th>
+      <div className="container">
+ 
+        <table className="table" style={styles}>
+          <thead className="table-head">
+            <th> Full Name </th>
+            <th> Email </th>
+            <th> Type </th>
            </thead>
            <tbody>
             <tr style={styles}>
               <td>
-                <span>dsfdsffds
-                </span>
+               <span> Mr Thomas(dumy) </span>
               </td>
               <td>
-                <span>dsfdsffds
-                </span>
+               <span> Thomas@gmail.com  </span>
               </td>
               <td>
-                <span>ffdsfsdf
-                </span>
+               <span> User </span>
               </td>
             </tr>
            </tbody>
         </table>
+             <button  className="btn btn-primary" onClick= {() => this.logout()}> Logout </button>
       </div>
          )
   }
 }
+
+
+function mapStateToProps({ LoginReducer  }) {
+  return {
+    LoginReducer
+  };
+}
+export default connect(mapStateToProps, actions)(UserLogin);

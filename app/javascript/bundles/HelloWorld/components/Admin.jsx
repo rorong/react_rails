@@ -1,17 +1,20 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
+import { withCookies, Cookies } from 'react-cookie';
+import { connect } from 'react-redux';
+import { instanceOf } from 'prop-types';
+import { signup } from '../actions/index'
 
-
-export default class Admin extends React.Component {
+class Admin extends React.Component {
   static propTypes = {
   };
   constructor(props) {
     super(props);
     this.state = {
      email : '',
-      password: '',
-      name : '',
+     password: '',
+     name : ''
     }
   }
 
@@ -21,9 +24,9 @@ export default class Admin extends React.Component {
   }
 
     validateForm () {
-      const State = this.state;
-    const PwdValidation = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,50}$/;
-    const EmailValidation = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+     const State = this.state;
+     const PwdValidation = /^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,50}$/;
+     const EmailValidation = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if(this.state.name === "") {
       alert("define name")
@@ -40,12 +43,13 @@ export default class Admin extends React.Component {
     else if(!PwdValidation.test(this.state.password)) {
       alert("Password should be more than 6 characters with letters, numbers, special character")
     }
-
     else if(State.email != '' && State.name!= '' && State.password != '' ) {
-         alert("SuccessFul")
-         this.setState({ name: '', email: '' ,password: ''})
+      const OBJ={ 'email': this.state.email,'full_name': this.state.name, 'password': this.state.password }
+      const ADMIN = {'user' : OBJ }
+      this.props.dispatch(signup(ADMIN))
+      alert("CREATED")
+      this.setState({name: '', email: '', password: ''})
     }
-
   }
 
   handleLogin() {
@@ -55,7 +59,7 @@ export default class Admin extends React.Component {
   userPage() {
     const State = this.state;
     if(State.userData != '' && State.nameData != '' && State.passData != '') {
-     this.props.history.push('/hello_world/adminlogin')
+     this.props.history.push('/hello_world/admin/adminlogin')
    }
    else {
     alert("Please Enter Credential")
@@ -68,13 +72,16 @@ export default class Admin extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="container" align="center">
         <h1> Admin </h1>
+
+        <div className="input-fields"  >
           <span> Full Name &nbsp;
           <input 
             type="text" 
             onChange={(e) => this.setState({ name: e.target.value})} 
             value={this.state.name}
+            className="form-control col-md-3"
           />
         </span> 
         <br/>
@@ -83,6 +90,7 @@ export default class Admin extends React.Component {
             type="email" 
             onChange={(e) => this.setState({ email: e.target.value})} 
             value={this.state.email}
+            className="form-control col-md-3"
           />
         </span> 
         <br/>
@@ -90,13 +98,29 @@ export default class Admin extends React.Component {
           <input 
             type="password"  
             onChange={(e) => this.setState({ password: e.target.value})} 
-            value={this.state.password} 
+            value={this.state.password}
+            className="form-control col-md-3"
           />
         </span>
+      </div>
          <br/>
-          <button onClick = {() => this.handleSubmit()}> SignIn </button>
-          <button onClick = {() => this.handleLogin()}> Login </button>
+          <div className="btnClass">
+            <button className="btn btn-primary" onClick = {() => this.handleSubmit()}> SignIn </button>
+            <button className="btn btn-primary" onClick = {() => this.handleLogin()}> Login </button>
+          </div>
       </div>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+    return {
+      formData : state.formData
+    };
+  }
+
+Admin.propTypes = {
+  cookies: instanceOf(Cookies).isRequired
+};
+
+export default connect(mapStateToProps)(Admin)
