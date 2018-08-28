@@ -45,7 +45,7 @@ handleSubmit = () => {
     }
 
     else if(State.email != '' && State.name!= '' && State.password != '' ) {
-      const OBJ={ 'email': this.state.email,'full_name': this.state.name, 'password': this.state.password, 'type': 1 }
+      const OBJ={ 'email': this.state.email,'full_name': this.state.name, 'password': this.state.password, 'role': 'user' }
       const USER = {'user' : OBJ }
       this.props.dispatch(signup(USER))
       alert("CREATED")

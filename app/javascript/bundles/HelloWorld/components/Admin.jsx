@@ -44,7 +44,7 @@ class Admin extends React.Component {
       alert("Password should be more than 6 characters with letters, numbers, special character")
     }
     else if(State.email != '' && State.name!= '' && State.password != '' ) {
-      const OBJ={ 'email': this.state.email,'full_name': this.state.name, 'password': this.state.password }
+      const OBJ={ 'email': this.state.email,'full_name': this.state.name, 'password': this.state.password , 'role': 'admin'}
       const ADMIN = {'user' : OBJ }
       this.props.dispatch(signup(ADMIN))
       alert("CREATED")

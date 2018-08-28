@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get 'hello_world/userlogin', to: 'hello_world#userlogin'
   get 'hello_world/admin', to: 'hello_world#admin'
   get 'hello_world/user', to: 'hello_world#user'
-  devise_for :users
+  # devise_for :users
 
   namespace :api do
     namespace :v1 do

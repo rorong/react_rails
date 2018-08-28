@@ -1,7 +1,6 @@
 class Api::V1::UsersController < ApplicationController
 
   def create
-    @user = User.new(user_params)
     if params[:user][:role].eql? "admin"
       @user = Admin.new(user_params)
     else
@@ -27,6 +26,6 @@ class Api::V1::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:fullname, :email, :password, :role)
+    params.require(:user).permit(:full_name, :email, :password, :role)
   end
 end

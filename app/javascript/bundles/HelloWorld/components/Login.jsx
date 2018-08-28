@@ -18,94 +18,92 @@ import 'bootstrap/dist/css/bootstrap.min.css';
     }
   }
 
+  componentWillUnmount(){
+  }
+
   componentWillReceiveProps(nextProp) {
-    if(nextProp.LoginReducer != 'Invalid credentials!') {
+    if(nextProp.LoginReducer.data) {
       localStorage.setItem("userDetails",JSON.stringify(nextProp.LoginReducer));
       this.props.history.push('/hello_world/userlogin')
     }
+    else
+      {
+        alert("Invalid crediatial")
+      }
   }
 
     handleSubmit = () => {
-     const {email, name, password} = this.state;
+      const {email, name, password} = this.state;
       const checkValidation = this.validateForm();
   }
 
-    validateForm () {
-      const State = this.state;
-    const PwdValidation = /^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,50}$/;
+   validateForm () {
+    const State = this.state;
     const EmailValidation = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    
-    if(this.state.email === "") {
-      alert("email define")
-    }
-    else if(!EmailValidation.test(this.state.email)) {
-      alert("Please fill the correct email!")
-    }
-    else if(!PwdValidation.test(this.state.password)) {
-      alert("Password should be more than 6 characters with letters, numbers, special character")
-    }
-
-    else if(State.email != '' && State.name != '' && State.password != '' && State.loginDir == 'User' ) {
-      const OBJ={ 'email': this.state.email,'password': this.state.password, 'role': 2}
-      const USER = {'user' : OBJ }
-      this.props.login(USER)
-    }
-   else if(State.email != '' && State.name != '' && State.password != '' && State.loginDir == 'Admin' ) {
-      const OBJ={ 'email': this.state.email,'password': this.state.password, 'role': 1}
-      const USER = {'user' : OBJ }
-      this.props.login(USER)
-
-    }
-  }
-
+      if(this.state.email === "") {
+         alert("email define")
+       }
+       else if(!EmailValidation.test(this.state.email)) {
+        alert("Please fill the correct email!")
+       }
+       else if(State.email != '' && State.name != '' && State.password != ''  ) {
+        const OBJ={ 'email': this.state.email,'password': this.state.password, 'role': 2}
+        const USER = {'user' : OBJ }
+        this.props.login(USER)
+       }
+       else if(State.email != '' && State.name != '' && State.password != ''  ) {
+        const OBJ={ 'email': this.state.email,'password': this.state.password, 'role': 1}
+        const USER = {'user' : OBJ }
+        this.props.login(USER)
+       }
+   }
 
   signUpForm() {
-   const State = this.state;
+    const State = this.state;
       if( State.loginDir=="User") {
         this.props.history.push('/hello_world/user')
       }
-     else if(State.loginDir=="Admin") {
+      else if(State.loginDir=="Admin") {
         this.props.history.push('/hello_world/admin')
       }
-     else {
+      else {
         this.props.history.push('/hello_world/user')
+      }
     }
-  }
 
-  handleChange(val) {
-    this.setState({loginDir : val.target.value})
+    handleChange(val) {
+      this.setState({loginDir : val.target.value})
   }
 
   render() {
     return (
       <div className="container" align="center">
-      <h1 className="form-heading">Login Form </h1>
-        <input type="radio" 
-          id="user" 
-          onChange ={(val) => this.handleChange(val)} 
-          name="login" 
-          value="User"
-        />
-        <label for="User"> User Login </label> 
-        <input type="radio" id="Admin" 
-          name="login" 
-          onChange ={(val) => this.handleChange(val)} 
-          value="Admin"
-        />
-        <label for="Admin"> Admin Login </label > 
-        <br/>
-        <div className="input-fields"  >
-          <span> User Id &nbsp;
+        <h1 className="form-heading">Login Form </h1>
+         <input type="radio" 
+            id="user" 
+            onChange ={(val) => this.handleChange(val)} 
+            name="login" 
+            value="User" checked
+            />
+          <label for="User"> User Login </label> 
+          <input type="radio" id="Admin" 
+            name="login" 
+            onChange ={(val) => this.handleChange(val)} 
+            value="Admin"
+            />
+          <label for="Admin"> Admin Login </label > 
+          <br/>
+          <div className="input-fields">
+           <span> User Id &nbsp;
             <input className="form-control col-md-3"
               type="email" 
               onChange={(e) => this.setState({ email: e.target.value})} 
               value={this.state.email}
            />       
           </span>
-        </div> 
-        <br/>
-        <div className="input-fields">
+         </div> 
+         <br/>
+         <div className="input-fields">
           <span> Password  &nbsp;
             <input 
               type="password"  
@@ -114,7 +112,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
               className="form-control col-md-3" 
             />
           </span>
-        </div>
+         </div>
          <br/>
          <div className="btnClass">
           <button className="btn btn-primary" onClick = {() => this.handleSubmit()}> Login </button>
