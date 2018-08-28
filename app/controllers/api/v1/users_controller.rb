@@ -1,12 +1,16 @@
 class Api::V1::UsersController < ApplicationController
 
   def create
-    @user = User.new(user_params)
+    if params[:user][:role].eql? "admin"
+      @user = Admin.new(user_params)
+    else
+      @user = User.new(user_params)
+    end
     @user.password_hash = user_params[:password]
     if @user.save
       render json: @user
     else
-      render json: {message: "Something went wrong"}, status: :bad_request
+      render json: {message: @user.try(:errors).try(:full_messages)}, status: :bad_request
     end
   end
 
@@ -19,9 +23,12 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def index
+  end
+
   private
 
   def user_params
-    params.require(:user).permit(:fullname, :email, :password, :type, :role)
+    params.require(:user).permit(:fullname, :email, :password, :role)
   end
 end

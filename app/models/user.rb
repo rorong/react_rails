@@ -8,8 +8,14 @@ class User < ApplicationRecord
 
   before_create :generate_token
 
-  # ROLE = %w(user admin)
-  enum role: %w(user admin)
+  ROLE = %w(user admin)
+  enum role: ROLE
+
+  # ROLE.each do |user_role|
+  #   defind_method "#{user_role}" do
+  #     role == user_role
+  #   end
+  # end
 
   def password
     @password ||= Password.new(password_hash)
