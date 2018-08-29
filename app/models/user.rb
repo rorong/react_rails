@@ -17,9 +17,9 @@ class User < ApplicationRecord
   #   end
   # end
 
-  def password
-    @password ||= Password.new(password_hash)
-  end
+  # def password
+  #   @password ||= Password.new(password_hash)
+  # end
 
   def password_hash=(new_password)
     @password = BCrypt::Password.create(new_password)

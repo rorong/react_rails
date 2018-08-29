@@ -37,3 +37,18 @@ label {
     font-weight: 700;
     margin-right: 18px;
 }
+
+.logout {
+    float: right;
+    margin: 15px !important;
+}
+
+input[type="text"] {
+    border: none;
+   
+    text-align: center;
+}
+
+input:focus{
+    border: none !important;
+}
