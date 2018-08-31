@@ -21,7 +21,7 @@ class Api::V1::UsersController < ApplicationController
     user = User.find_by_email(user_params[:email])
     if user.present? && user.authenticate(user_params[:password])
       if user.admin?
-        render json: {users: User.where(role: 'user')}
+        render json: {users: User.all}
       else
         render json: {users: user}
       end
@@ -37,7 +37,7 @@ class Api::V1::UsersController < ApplicationController
 
   def update
     if @user.present? && @user.update(user_params)
-      render json: {users: User.where(role: 'user')}
+      render json: {users: @user}
     end
   end
 

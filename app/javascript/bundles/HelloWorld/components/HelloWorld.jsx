@@ -3,7 +3,6 @@ import React from 'react';
 import User from './User';
 import Login from './Login';
 import Admin from './Admin';
-import AdminLogin from './AdminLogin';
 import {Provider} from 'react-redux';
 import UserLogin from './UserLogin';
 import createHistory from 'history/createBrowserHistory'
@@ -12,9 +11,6 @@ import configureStore from '../store/configureStore';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default class App extends React.Component {
-  static propTypes = {
-    //name: PropTypes.string.isRequired, // this is passed from the Rails view
-  };
   constructor(props) {
     super(props);
   }
@@ -39,10 +35,6 @@ export default class App extends React.Component {
             <Route
               exact path='/hello_world/admin'
               component={ Admin }
-            />
-            <Route
-              exact path='/hello_world/adminlogin'
-              component={ AdminLogin }
             />   
             <Route
               exact path='/hello_world/userlogin'

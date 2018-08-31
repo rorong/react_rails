@@ -23,8 +23,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
   componentWillReceiveProps(nextProp) {
     if(nextProp.LoginReducer.data) {
-      localStorage.setItem("userDetails",JSON.stringify(nextProp.LoginReducer));
-      this.props.history.push('/hello_world/userlogin')
+      localStorage.setItem('userEmail', this.state.email);
+      localStorage.setItem('userPassword', this.state.password);
+      this.props.history.push('/hello_world/userlogin',)
     }
     else
       {
@@ -76,6 +77,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
   }
 
   render() {
+
     return (
       <div className="container" align="center">
         <h1 className="form-heading">Login Form </h1>
@@ -85,13 +87,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
             name="login" 
             value="User" checked
             />
-          <label for="User"> User Login </label> 
+          <label > User Login </label> 
           <input type="radio" id="Admin" 
             name="login" 
             onChange ={(val) => this.handleChange(val)} 
             value="Admin"
             />
-          <label for="Admin"> Admin Login </label > 
+          <label> Admin Login </label > 
           <br/>
           <div className="input-fields">
            <span> User Id &nbsp;

@@ -72,7 +72,7 @@ handleLogin() {
             type="text" 
             onChange={(e) => this.setState({ name: e.target.value})} 
             value={this.state.name}
-            className="form-control col-md-3"
+            className="form-control col-md-3 "
           />
         </span> 
         <br/>
@@ -97,7 +97,7 @@ handleLogin() {
          <br/>
         <div className="btnClass">
           <button className="btn btn-primary"  onClick = {() => this.handleSubmit()}> SignIn </button>
-           <button className="btn btn-primary"  onClick = {() => this.handleLogin()}> Login </button>
+          <button className="btn btn-primary"  onClick = {() => this.handleLogin()}> Login </button>
         </div>
       </div>
     );
