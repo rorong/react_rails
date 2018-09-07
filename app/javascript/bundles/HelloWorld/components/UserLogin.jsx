@@ -10,6 +10,7 @@ import AddModal from './Modal'
   };
   constructor(props) {
     super(props);
+// Define Initial state of the component
     this.state = {
       email : '',
       modal: false,
@@ -56,15 +57,18 @@ toggle = (value,email) => {
   }
   }
  
+
  hideShow() {     
   this.setState({hide : !this.state.hide})
 
  }
 
+// Open and Close Modal
   showData = () => {
      this.setState({modal: !this.state.modal});
   }
  
+//Submission of the form
  handleSubmit() {
     const TOKEN = this.state.token;
     const OBJ= {'full_name': this.state.name,'password': this.state.password}
@@ -76,11 +80,13 @@ toggle = (value,email) => {
 
 }
 
+//Handle Logout
  logout() {
     localStorage.clear();
     this.props.history.push('/hello_world/')
  }
 
+// handle event for each property
  eventHandle(value,name) {
     this.setState({ [name]: value})
  }
@@ -151,6 +157,7 @@ toggle = (value,email) => {
   }
 }
 
+// Fetch Redux app state and use as props
 const mapStateToProps = (state) => {
     return {
      state : state.LoginReducer.data,
