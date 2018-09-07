@@ -6,10 +6,10 @@ import * as actions from '../actions';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
  class Login extends React.Component {
-  static propTypes = {
-  };
+
   constructor(props) {
     super(props);
+//    Define Initial states 
     this.state = {
       email : '',
       password : '',
@@ -18,9 +18,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
     }
   }
 
-  componentWillUnmount(){
-  }
-
+// Handle The New Props
   componentWillReceiveProps(nextProp) {
     if(nextProp.LoginReducer.data) {
       localStorage.setItem('userEmail', this.state.email);
@@ -32,18 +30,21 @@ import 'bootstrap/dist/css/bootstrap.min.css';
         alert("Invalid crediatial")
       }
   }
-
+// Submit the form
     handleSubmit = () => {
       const {email, name, password} = this.state;
       const checkValidation = this.validateForm();
   }
 
+// Validate Form
    validateForm () {
     const State = this.state;
     const EmailValidation = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      if(this.state.email === "") {
+//    validate email property should not blank
+    if(this.state.email === "") {
          alert("email define")
        }
+//     Validate Email property
        else if(!EmailValidation.test(this.state.email)) {
         alert("Please fill the correct email!")
        }
@@ -59,6 +60,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
        }
    }
 
+// Multiple Redirects
   signUpForm() {
     const State = this.state;
       if( State.loginDir=="User") {
@@ -72,6 +74,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
       }
     }
 
+// handle onChangec for each property 
     handleChange(val) {
       this.setState({loginDir : val.target.value})
   }
@@ -125,6 +128,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
   }
 }
 
+// Use Redux state in this component as a Props
 function mapStateToProps({ LoginReducer  }) {
   return {
     LoginReducer
