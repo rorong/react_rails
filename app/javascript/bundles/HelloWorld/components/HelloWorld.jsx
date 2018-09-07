@@ -16,8 +16,11 @@ export default class App extends React.Component {
   }
 
   render() {
+    //fetch global config of store
     const store = configureStore();
+    //fetch global history of app
     const history = createHistory()
+    //Define Routes Of The App
     return (
       <div>
         <Provider store={store}>
