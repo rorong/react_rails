@@ -5,6 +5,7 @@ import { Modal, ModalBody, ModalFooter } from 'reactstrap';
 class AddModal extends React.Component {
    constructor(props) {
     super(props);
+// Initial State of the components
     this.state = {
       name : '',
       password : ''
